@@ -8,9 +8,9 @@ import kotlinx.android.synthetic.main.list_item.view.*
 import ru.geekbrains.android2.openliblight.R
 import ru.geekbrains.android2.openliblight.model.Work
 import ru.geekbrains.android2.openliblight.utils.setStartDrawableImageFromUri
-import ru.geekbrains.android2.openliblight.view.SearchResultAdapter.SearchResultViewHolder
+import ru.geekbrains.android2.openliblight.view.BooksAdapter.SearchResultViewHolder
 
-internal class SearchResultAdapter : RecyclerView.Adapter<SearchResultViewHolder>() {
+internal class BooksAdapter : RecyclerView.Adapter<SearchResultViewHolder>() {
 
     private var results: List<Work> = listOf()
 

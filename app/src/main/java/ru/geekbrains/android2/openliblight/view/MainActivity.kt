@@ -20,7 +20,7 @@ import ru.geekbrains.android2.openliblight.repository.OpenLibRepository
 import java.util.*
 
 class MainActivity : AppCompatActivity(), ViewContract {
-    private val adapter = SearchResultAdapter()
+    private val adapter = BooksAdapter()
     private val presenter: PresenterContract = BooksPresenter(this, createRepository())
 
     override fun onCreate(savedInstanceState: Bundle?) {
