@@ -1,15 +1,15 @@
-package ru.geekbrains.android2.openliblight.presenter
+package ru.geekbrains.android2.openliblight.presenter.books
 
 import retrofit2.Response
 import ru.geekbrains.android2.openliblight.model.WorksSubj
 import ru.geekbrains.android2.openliblight.repository.OpenLibRepository
 import ru.geekbrains.android2.openliblight.repository.OpenLibRepository.OpenLibRepositoryCallback
-import ru.geekbrains.android2.openliblight.view.ViewContract
+import ru.geekbrains.android2.openliblight.view.books.ViewBooksContract
 
 internal class BooksPresenter internal constructor(
-    private val viewContract: ViewContract,
+    private val viewContract: ViewBooksContract,
     private val repository: OpenLibRepository
-) : PresenterContract, OpenLibRepositoryCallback {
+) : PresenterBooksContract, OpenLibRepositoryCallback {
 
     override fun searchOpenLib(searchQuery: String) {
         viewContract.displayLoading(true)

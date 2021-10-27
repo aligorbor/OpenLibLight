@@ -3,6 +3,7 @@ package ru.geekbrains.android2.openliblight.utils
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -11,6 +12,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlin.math.roundToInt
+
+fun View.click(click: () -> Unit) = setOnClickListener { click() }
 
 @Suppress("IMPLICIT_CAST_TO_ANY")
 fun TextView.setStartDrawableImageFromUri(uri: String, placeholder: Int = 0) {

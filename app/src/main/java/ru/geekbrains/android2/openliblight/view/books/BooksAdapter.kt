@@ -1,4 +1,4 @@
-package ru.geekbrains.android2.openliblight.view
+package ru.geekbrains.android2.openliblight.view.books
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item.view.*
 import ru.geekbrains.android2.openliblight.R
 import ru.geekbrains.android2.openliblight.model.Work
+import ru.geekbrains.android2.openliblight.utils.click
 import ru.geekbrains.android2.openliblight.utils.setStartDrawableImageFromUri
-import ru.geekbrains.android2.openliblight.view.BooksAdapter.SearchResultViewHolder
+import ru.geekbrains.android2.openliblight.view.books.BooksAdapter.SearchResultViewHolder
 
-internal class BooksAdapter : RecyclerView.Adapter<SearchResultViewHolder>() {
+internal class BooksAdapter(private val delegate: Delegate?) :
+    RecyclerView.Adapter<SearchResultViewHolder>() {
 
     private var results: List<Work> = listOf()
 
@@ -27,7 +29,7 @@ internal class BooksAdapter : RecyclerView.Adapter<SearchResultViewHolder>() {
         holder: SearchResultViewHolder,
         position: Int
     ) {
-        holder.bind(results[position])
+        holder.bind(results[position], delegate)
     }
 
     override fun getItemCount(): Int {
@@ -41,9 +43,15 @@ internal class BooksAdapter : RecyclerView.Adapter<SearchResultViewHolder>() {
 
     internal class SearchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(searchResult: Work) {
+        fun bind(searchResult: Work, delegate: Delegate?) {
             itemView.bookTitle.setStartDrawableImageFromUri("https://covers.openlibrary.org/b/ID/${searchResult.coverId}-M.jpg")
             itemView.bookTitle.text = searchResult.title
+            itemView.click { delegate?.onBookPicked(searchResult) }
         }
     }
+
+    interface Delegate {
+        fun onBookPicked(book: Work)
+    }
+
 }

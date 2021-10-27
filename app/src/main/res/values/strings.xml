@@ -3,6 +3,9 @@
     <string name="book_title">book title</string>
     <string name="search_hint">Enter the theme to look for the books</string>
     <string name="enter_search_word">Enter search word</string>
-    <string name="results_count">Number of results: %s</string>
+    <string name="raiting_count">Raiting: %s</string>
+    <string name="total_count">Total count: %s</string>
     <string name="undefined_error">Undefined error</string>
+    <string name="decrement_text">-</string>
+    <string name="increment_text">+</string>
 </resources>

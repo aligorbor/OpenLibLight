@@ -1,4 +1,4 @@
-package ru.geekbrains.android2.openliblight.view
+package ru.geekbrains.android2.openliblight.view.books
 
 import android.os.Bundle
 import android.view.View
@@ -13,15 +13,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.geekbrains.android2.openliblight.R
 import ru.geekbrains.android2.openliblight.model.Work
-import ru.geekbrains.android2.openliblight.presenter.BooksPresenter
-import ru.geekbrains.android2.openliblight.presenter.PresenterContract
+import ru.geekbrains.android2.openliblight.presenter.books.BooksPresenter
+import ru.geekbrains.android2.openliblight.presenter.books.PresenterBooksContract
 import ru.geekbrains.android2.openliblight.repository.OpenLibApi
 import ru.geekbrains.android2.openliblight.repository.OpenLibRepository
+import ru.geekbrains.android2.openliblight.view.book.BookActivity
 import java.util.*
 
-class MainActivity : AppCompatActivity(), ViewContract {
-    private val adapter = BooksAdapter()
-    private val presenter: PresenterContract = BooksPresenter(this, createRepository())
+class MainActivity : AppCompatActivity(), ViewBooksContract, BooksAdapter.Delegate {
+    private val adapter = BooksAdapter(this)
+    private val presenter: PresenterBooksContract = BooksPresenter(this, createRepository())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +82,7 @@ class MainActivity : AppCompatActivity(), ViewContract {
     override fun displaySearchResults(searchResults: List<Work>, totalCount: String) {
         adapter.updateResults(searchResults)
         resultsCountTextView.text =
-            String.format(Locale.getDefault(), getString(R.string.results_count), totalCount)
+            String.format(Locale.getDefault(), getString(R.string.total_count), totalCount)
     }
 
     override fun displayError() {
@@ -100,7 +101,21 @@ class MainActivity : AppCompatActivity(), ViewContract {
         }
     }
 
+    override fun onBookPicked(book: Work) {
+        startActivity(
+            BookActivity.getIntent(
+                this,
+                book.title,
+                book.authors[0].name,
+                "https://covers.openlibrary.org/b/ID/${book.coverId}-M.jpg",
+                0
+            )
+        )
+    }
+
     companion object {
         const val BASE_URL = "https://openlibrary.org"
     }
+
+
 }
