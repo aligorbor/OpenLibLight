@@ -11,14 +11,24 @@ import ru.geekbrains.android2.openliblight.presenter.book.PresenterBookContract
 import ru.geekbrains.android2.openliblight.utils.setImageFromUri
 import java.util.*
 
-class BookActivity : AppCompatActivity(), ViewDetailsContract {
+class BookActivity : AppCompatActivity(), ViewBookContract {
 
-    private val presenter: PresenterBookContract = BookPresenter(this)
+    private val presenter: PresenterBookContract<ViewBookContract> = BookPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
         setUI()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.onAttach(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.onDetach()
     }
 
     private fun setUI() {
@@ -27,21 +37,21 @@ class BookActivity : AppCompatActivity(), ViewDetailsContract {
         val cover = intent.getStringExtra(BOOK_COVER_EXTRA)
         val raiting = intent.getIntExtra(BOOK_RAITING_EXTRA, 0)
         iv_cover.setImageFromUri(cover ?: "")
-        tv_title.text = title ?: ""
-        tv_authors.text = author ?: ""
+        tv_title.text = String.format(Locale.getDefault(), getString(R.string.title), title ?: "")
+        tv_authors.text = String.format(Locale.getDefault(), getString(R.string.authors), author ?: "")
         presenter.setRaiting(raiting)
-        setCountText(raiting)
-        decrementButton.setOnClickListener { presenter.onDecrement() }
-        incrementButton.setOnClickListener { presenter.onIncrement() }
+        setRaitingText(presenter.getRaiting())
+        btn_decr.setOnClickListener { presenter.onDecrement() }
+        btn_incr.setOnClickListener { presenter.onIncrement() }
     }
 
-    override fun setCount(count: Int) {
-        setCountText(count)
+    override fun setRaiting(raiting: Int) {
+        setRaitingText(raiting)
     }
 
-    private fun setCountText(count: Int) {
-        raitingTextView.text =
-            String.format(Locale.getDefault(), getString(R.string.raiting_count), count)
+    private fun setRaitingText(raiting: Int) {
+        tv_raiting.text =
+            String.format(Locale.getDefault(), getString(R.string.raiting_count), raiting)
     }
 
     companion object {

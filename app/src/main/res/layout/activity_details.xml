@@ -22,7 +22,8 @@
                 android:layout_weight="1"
                 android:padding="@dimen/pad16"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_baseline_book_24" />
+                app:srcCompat="@drawable/ic_baseline_book_24"
+                android:contentDescription="@string/book_cover" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -31,6 +32,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:padding="@dimen/pad16"
+                android:text="@string/raiting_count"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text24"
                 tools:text="Title" />
@@ -42,6 +44,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:padding="@dimen/pad16"
+                android:text="@string/raiting_count"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text24"
                 android:textStyle="italic"
@@ -54,7 +57,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/decrementButton"
+                    android:id="@+id/btn_decr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -65,7 +68,7 @@
                     android:textSize="@dimen/text24" />
 
                 <TextView
-                    android:id="@+id/raitingTextView"
+                    android:id="@+id/tv_raiting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -76,7 +79,7 @@
                     tools:text="Raiting: 100" />
 
                 <Button
-                    android:id="@+id/incrementButton"
+                    android:id="@+id/btn_incr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

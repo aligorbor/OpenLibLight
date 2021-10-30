@@ -22,12 +22,23 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), ViewBooksContract, BooksAdapter.Delegate {
     private val adapter = BooksAdapter(this)
-    private val presenter: PresenterBooksContract = BooksPresenter(this, createRepository())
+    private val presenter: PresenterBooksContract<ViewBooksContract> =
+        BooksPresenter(createRepository())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setUI()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.onAttach(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.onDetach()
     }
 
     private fun setUI() {
@@ -82,7 +93,7 @@ class MainActivity : AppCompatActivity(), ViewBooksContract, BooksAdapter.Delega
     override fun displaySearchResults(searchResults: List<Work>, totalCount: String) {
         adapter.updateResults(searchResults)
         resultsCountTextView.text =
-            String.format(Locale.getDefault(), getString(R.string.total_count), totalCount)
+            String.format(Locale.getDefault(), getString(R.string.results_count), totalCount)
     }
 
     override fun displayError() {

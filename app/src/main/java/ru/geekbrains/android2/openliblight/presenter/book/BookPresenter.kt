@@ -1,23 +1,40 @@
 package ru.geekbrains.android2.openliblight.presenter.book
 
-import ru.geekbrains.android2.openliblight.view.book.ViewDetailsContract
+import ru.geekbrains.android2.openliblight.view.book.ViewBookContract
 
-internal class BookPresenter internal constructor(
-    private val viewContract: ViewDetailsContract,
-    private var count: Int = 0
-) : PresenterBookContract {
+internal class BookPresenter<V : ViewBookContract> internal constructor(
+    private var raiting: Int = 0
+) : PresenterBookContract<V> {
+
+    private var viewContract: V? = null
 
     override fun setRaiting(count: Int) {
-        this.count = count
+        this.raiting = count
     }
 
     override fun onIncrement() {
-        count++
-        viewContract.setCount(count)
+        raiting++
+        viewContract?.setRaiting(raiting)
     }
 
     override fun onDecrement() {
-        count--
-        viewContract.setCount(count)
+        raiting--
+        viewContract?.setRaiting(raiting)
+    }
+
+    override fun onAttach(viewContract: V) {
+        this.viewContract = viewContract
+    }
+
+    override fun onDetach() {
+        viewContract = null
+    }
+
+    override fun getView(): V? {
+        return viewContract
+    }
+
+    override fun getRaiting(): Int {
+        return raiting
     }
 }
