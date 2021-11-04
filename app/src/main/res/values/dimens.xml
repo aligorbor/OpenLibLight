@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="list_item_padding">16dp</dimen>
+    <dimen name="margin">16dp</dimen>
+    <dimen name="list_item_text_size">24sp</dimen>
+    <dimen name="text24">24sp</dimen>
+    <dimen name="pad16">16dp</dimen>
+    <dimen name="width_cover">300dp</dimen>
+    <dimen name="height_cover">400dp</dimen>
+</resources>
