@@ -32,7 +32,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:padding="@dimen/pad16"
-                android:text="@string/raiting_count"
+                android:text="@string/title"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text24"
                 tools:text="Title" />
@@ -44,7 +44,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:padding="@dimen/pad16"
-                android:text="@string/raiting_count"
+                android:text="@string/authors"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text24"
                 android:textStyle="italic"

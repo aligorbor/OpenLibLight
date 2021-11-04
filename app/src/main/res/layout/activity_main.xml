@@ -31,6 +31,7 @@
         android:id="@+id/resultsCountTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:layout_marginTop="@dimen/margin"
         app:layout_constraintTop_toBottomOf="@id/searchEditText"
         tools:text="Number of results: 1000000" />

@@ -17,6 +17,7 @@ import ru.geekbrains.android2.openliblight.presenter.books.BooksPresenter
 import ru.geekbrains.android2.openliblight.presenter.books.PresenterBooksContract
 import ru.geekbrains.android2.openliblight.repository.OpenLibApi
 import ru.geekbrains.android2.openliblight.repository.OpenLibRepository
+import ru.geekbrains.android2.openliblight.repository.RepositoryContract
 import ru.geekbrains.android2.openliblight.view.book.BookActivity
 import java.util.*
 
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity(), ViewBooksContract, BooksAdapter.Delega
     private val adapter = BooksAdapter(this)
     private val presenter: PresenterBooksContract<ViewBooksContract> =
         BooksPresenter(createRepository())
+    private var totalCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +73,7 @@ class MainActivity : AppCompatActivity(), ViewBooksContract, BooksAdapter.Delega
         })
     }
 
-    private fun createRepository(): OpenLibRepository {
+    private fun createRepository(): RepositoryContract {
         return OpenLibRepository(createRetrofit().create(OpenLibApi::class.java))
     }
 
@@ -94,6 +96,8 @@ class MainActivity : AppCompatActivity(), ViewBooksContract, BooksAdapter.Delega
         adapter.updateResults(searchResults)
         resultsCountTextView.text =
             String.format(Locale.getDefault(), getString(R.string.results_count), totalCount)
+        this.totalCount = totalCount.toInt()
+        resultsCountTextView.visibility = View.VISIBLE
     }
 
     override fun displayError() {
@@ -119,7 +123,7 @@ class MainActivity : AppCompatActivity(), ViewBooksContract, BooksAdapter.Delega
                 book.title,
                 book.authors[0].name,
                 "https://covers.openlibrary.org/b/ID/${book.coverId}-M.jpg",
-                0
+                totalCount
             )
         )
     }

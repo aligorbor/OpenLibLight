@@ -5,11 +5,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import ru.geekbrains.android2.openliblight.model.WorksSubj
 
-internal class OpenLibRepository(private val openLibApi: OpenLibApi) {
+internal class OpenLibRepository(private val openLibApi: OpenLibApi):RepositoryContract {
 
-    fun searchOpenLib(
+    override fun searchOpenLib(
         query: String,
-        callback: OpenLibRepositoryCallback
+        callback: RepositoryCallback
     ) {
         val call = openLibApi.getWorksBySubject(query)
         call?.enqueue(object : Callback<WorksSubj?> {
@@ -30,8 +30,4 @@ internal class OpenLibRepository(private val openLibApi: OpenLibApi) {
         })
     }
 
-    interface OpenLibRepositoryCallback {
-        fun handleOpenLibResponse(response: Response<WorksSubj?>?)
-        fun handleOpenLibError()
-    }
 }

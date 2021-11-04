@@ -13,7 +13,7 @@ import retrofit2.Response
 import ru.geekbrains.android2.openliblight.model.WorksSubj
 import ru.geekbrains.android2.openliblight.repository.OpenLibApi
 import ru.geekbrains.android2.openliblight.repository.OpenLibRepository
-import ru.geekbrains.android2.openliblight.repository.OpenLibRepository.OpenLibRepositoryCallback
+import ru.geekbrains.android2.openliblight.repository.RepositoryCallback
 
 class OpenLibRepositoryTest {
     private lateinit var repository: OpenLibRepository
@@ -33,7 +33,7 @@ class OpenLibRepositoryTest {
         val call = mock(Call::class.java) as Call<WorksSubj?>
 
         `when`(openLibApi.getWorksBySubject(searchQuery)).thenReturn(call)
-        repository.searchOpenLib(searchQuery, mock(OpenLibRepositoryCallback::class.java))
+        repository.searchOpenLib(searchQuery, mock(RepositoryCallback::class.java))
         verify(openLibApi, times(1)).getWorksBySubject(searchQuery)
     }
 
@@ -41,7 +41,7 @@ class OpenLibRepositoryTest {
     fun searchOpenLib_TestCallback() {
         val searchQuery = "some theme"
         val response = mock(Response::class.java) as Response<WorksSubj?>
-        val openLibRepositoryCallBack = mock(OpenLibRepositoryCallback::class.java)
+        val openLibRepositoryCallBack = mock(RepositoryCallback::class.java)
         val call = object : Call<WorksSubj?> {
             override fun clone(): Call<WorksSubj?> {
                 TODO("Not yet implemented")
@@ -92,7 +92,7 @@ class OpenLibRepositoryTest {
         val response = mock(Response::class.java) as Response<WorksSubj?>
         val call = mock(Call::class.java) as Call<WorksSubj?>
         val callBack = mock(Callback::class.java) as Callback<WorksSubj?>
-        val openLibRepositoryCallback = mock(OpenLibRepositoryCallback::class.java)
+        val openLibRepositoryCallback = mock(RepositoryCallback::class.java)
 
         `when`(openLibApi.getWorksBySubject(searchQuery)).thenReturn(call)
         `when`(call.enqueue(callBack)).then {

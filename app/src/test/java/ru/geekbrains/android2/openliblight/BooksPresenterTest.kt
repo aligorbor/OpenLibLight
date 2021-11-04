@@ -17,7 +17,7 @@ import retrofit2.Response
 import ru.geekbrains.android2.openliblight.model.Work
 import ru.geekbrains.android2.openliblight.model.WorksSubj
 import ru.geekbrains.android2.openliblight.presenter.books.BooksPresenter
-import ru.geekbrains.android2.openliblight.repository.OpenLibRepository
+import ru.geekbrains.android2.openliblight.repository.RepositoryContract
 import ru.geekbrains.android2.openliblight.view.books.MainActivity
 import ru.geekbrains.android2.openliblight.view.books.ViewBooksContract
 
@@ -29,7 +29,7 @@ class BooksPresenterTest {
     private lateinit var scenario: ActivityScenario<MainActivity>
 
     @Mock
-    private lateinit var repository: OpenLibRepository
+    private lateinit var repository: RepositoryContract
 
     @Mock
     private lateinit var viewContract: ViewBooksContract

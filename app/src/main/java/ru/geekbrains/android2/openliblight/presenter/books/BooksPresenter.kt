@@ -2,13 +2,13 @@ package ru.geekbrains.android2.openliblight.presenter.books
 
 import retrofit2.Response
 import ru.geekbrains.android2.openliblight.model.WorksSubj
-import ru.geekbrains.android2.openliblight.repository.OpenLibRepository
-import ru.geekbrains.android2.openliblight.repository.OpenLibRepository.OpenLibRepositoryCallback
+import ru.geekbrains.android2.openliblight.repository.RepositoryCallback
+import ru.geekbrains.android2.openliblight.repository.RepositoryContract
 import ru.geekbrains.android2.openliblight.view.books.ViewBooksContract
 
 internal class BooksPresenter<V : ViewBooksContract> internal constructor(
-    private val repository: OpenLibRepository
-) : PresenterBooksContract<V>, OpenLibRepositoryCallback {
+    private val repository: RepositoryContract
+) : PresenterBooksContract<V>, RepositoryCallback {
 
     private var viewContract: V? = null
 
@@ -19,7 +19,7 @@ internal class BooksPresenter<V : ViewBooksContract> internal constructor(
     }
 
     override fun onAttach(viewContract: V) {
-        this.viewContract=viewContract
+        this.viewContract = viewContract
     }
 
     override fun onDetach() {
