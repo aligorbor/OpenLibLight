@@ -56,22 +56,30 @@ class MainActivity : AppCompatActivity(), ViewBooksContract, BooksAdapter.Delega
     private fun setQueryListener() {
         searchEditText.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val query = searchEditText.text.toString()
-                if (query.isNotBlank()) {
-                    presenter.searchOpenLib(query)
-                    return@OnEditorActionListener true
-                } else {
-                    Toast.makeText(
-                        this@MainActivity,
-                        getString(R.string.enter_search_word),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@OnEditorActionListener false
-                }
+                searchQuery()
             }
             false
         })
+        search_fab.setOnClickListener {
+            searchQuery()
+        }
     }
+
+    private fun searchQuery(): Boolean {
+        val query = searchEditText.text.toString()
+        if (query.isNotBlank()) {
+            presenter.searchOpenLib(query)
+            return true
+        } else {
+            Toast.makeText(
+                this@MainActivity,
+                getString(R.string.enter_search_word),
+                Toast.LENGTH_LONG
+            ).show()
+            return false
+        }
+    }
+
 
     private fun createRepository(): RepositoryContract {
         return OpenLibRepository(createRetrofit().create(OpenLibApi::class.java))
