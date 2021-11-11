@@ -72,19 +72,19 @@ class BookActivityEspressoTest {
 
     @Test
     fun activityTextView_Raiting_HasText() {
-        val assertion = ViewAssertions.matches(ViewMatchers.withText("Raiting: 0"))
+        val assertion = ViewAssertions.matches(ViewMatchers.withText(TEST_RAITING_ZERO))
         Espresso.onView(withId(R.id.tv_raiting)).check(assertion)
     }
 
     @Test
     fun activityTextView_Title_HasText() {
-        val assertion = ViewAssertions.matches(ViewMatchers.withText("Title: "))
+        val assertion = ViewAssertions.matches(ViewMatchers.withText(TEST_TITLE_BLANK))
         Espresso.onView(withId(R.id.tv_title)).check(assertion)
     }
 
     @Test
     fun activityTextView_Authors_HasText() {
-        val assertion = ViewAssertions.matches(ViewMatchers.withText("Authors: "))
+        val assertion = ViewAssertions.matches(ViewMatchers.withText(TEST_AUTHOR_BLANK))
         Espresso.onView(withId(R.id.tv_authors)).check(assertion)
     }
 
@@ -159,13 +159,13 @@ class BookActivityEspressoTest {
 
     @Test
     fun activityButtonIncrement_HasText() {
-        val assertion = ViewAssertions.matches(ViewMatchers.withText("+"))
+        val assertion = ViewAssertions.matches(ViewMatchers.withText(TEST_BUTTON_INCR_TEXT))
         Espresso.onView(withId(R.id.btn_incr)).check(assertion)
     }
 
     @Test
     fun activityButtonDecrement_HasText() {
-        val assertion = ViewAssertions.matches(ViewMatchers.withText("-"))
+        val assertion = ViewAssertions.matches(ViewMatchers.withText(TEST_BUTTON_DECR_TEXT))
         Espresso.onView(withId(R.id.btn_decr)).check(assertion)
     }
 
@@ -173,14 +173,14 @@ class BookActivityEspressoTest {
     fun activityButtonIncrement_IsWorking() {
         Espresso.onView(withId(R.id.btn_incr)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.tv_raiting))
-            .check(ViewAssertions.matches(ViewMatchers.withText("Raiting: 1")))
+            .check(ViewAssertions.matches(ViewMatchers.withText(TEST_RAITING_PLUS_1)))
     }
 
     @Test
     fun activityButtonDecrement_IsWorking() {
         Espresso.onView(withId(R.id.btn_decr)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.tv_raiting))
-            .check(ViewAssertions.matches(ViewMatchers.withText("Raiting: -1")))
+            .check(ViewAssertions.matches(ViewMatchers.withText(TEST_RAITING_MINUS_1)))
     }
 
     @After

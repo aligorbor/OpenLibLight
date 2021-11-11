@@ -73,9 +73,8 @@ class BooksPresenterTest {
 
     @Test
     fun searchOpenLib_Test() {
-        val searchQuery = "some theme"
-        presenter.searchOpenLib(searchQuery)
-        Mockito.verify(repository, Mockito.times(1)).searchOpenLib(searchQuery, presenter)
+        presenter.searchOpenLib(TEST_SEARCH_QUERY)
+        Mockito.verify(repository, Mockito.times(1)).searchOpenLib(TEST_SEARCH_QUERY, presenter)
     }
 
     @Test
@@ -100,7 +99,7 @@ class BooksPresenterTest {
         presenter.handleOpenLibResponse(response)
 
         Mockito.verify(viewContract, Mockito.times(1))
-            .displayError("Response is null or unsuccessful")
+            .displayError(TEST_DISPLAY_ERROR_UNSUCCESSFUL)
     }
 
     @Test
@@ -113,7 +112,7 @@ class BooksPresenterTest {
 
         val inOrder = Mockito.inOrder(viewContract)
         inOrder.verify(viewContract).displayLoading(false)
-        inOrder.verify(viewContract).displayError("Response is null or unsuccessful")
+        inOrder.verify(viewContract).displayError(TEST_DISPLAY_ERROR_UNSUCCESSFUL)
     }
 
     @Test
@@ -146,24 +145,23 @@ class BooksPresenterTest {
         presenter.handleOpenLibResponse(response)
 
         Mockito.verify(viewContract, Mockito.times(1))
-            .displayError("Search results or total count are null")
+            .displayError(TEST_DISPLAY_ERROR_NULL)
     }
 
     @Test
     fun handleOpenLibResponse_Success() {
-        val totalCount = "100"
         val response = Mockito.mock(Response::class.java) as Response<WorksSubj?>
         val worksSubj = Mockito.mock(WorksSubj::class.java)
         val works = listOf(Mockito.mock(Work::class.java))
         Mockito.`when`(response.isSuccessful).thenReturn(true)
         Mockito.`when`(response.body()).thenReturn(worksSubj)
         Mockito.`when`(worksSubj.works).thenReturn(works)
-        Mockito.`when`(worksSubj.workCount).thenReturn(totalCount)
+        Mockito.`when`(worksSubj.workCount).thenReturn(TEST_TOTAL_COUNT)
 
         presenter.onAttach(viewContract)
         presenter.handleOpenLibResponse(response)
 
-        Mockito.verify(viewContract, Mockito.times(1)).displaySearchResults(works, totalCount)
+        Mockito.verify(viewContract, Mockito.times(1)).displaySearchResults(works, TEST_TOTAL_COUNT)
     }
 
     @After

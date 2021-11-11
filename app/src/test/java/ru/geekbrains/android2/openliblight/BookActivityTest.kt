@@ -78,7 +78,7 @@ class BookActivityTest {
     fun activityTextView_Title_HasText() {
         scenario.onActivity {
             val tv = it.findViewById<TextView>(R.id.tv_title)
-            TestCase.assertEquals("Title: ", tv.text)
+            TestCase.assertEquals(TEST_TITLE_BLANK, tv.text)
         }
     }
 
@@ -86,7 +86,7 @@ class BookActivityTest {
     fun activityTextView_Authors_HasText() {
         scenario.onActivity {
             val tv = it.findViewById<TextView>(R.id.tv_authors)
-            TestCase.assertEquals("Authors: ", tv.text)
+            TestCase.assertEquals(TEST_AUTHOR_BLANK, tv.text)
         }
     }
 
@@ -94,7 +94,7 @@ class BookActivityTest {
     fun activityTextView_Raitng_HasText() {
         scenario.onActivity {
             val tv = it.findViewById<TextView>(R.id.tv_raiting)
-            TestCase.assertEquals("Raiting: 0", tv.text)
+            TestCase.assertEquals(TEST_RAITING_ZERO, tv.text)
         }
     }
 
@@ -139,7 +139,7 @@ class BookActivityTest {
             val btnIncr = it.findViewById<Button>(R.id.btn_incr)
             val tv = it.findViewById<TextView>(R.id.tv_raiting)
             btnIncr.performClick()
-            TestCase.assertEquals("Raiting: 1", tv.text)
+            TestCase.assertEquals(TEST_RAITING_PLUS_1, tv.text)
         }
     }
 
@@ -149,7 +149,7 @@ class BookActivityTest {
             val btnDecr = it.findViewById<Button>(R.id.btn_decr)
             val tv = it.findViewById<TextView>(R.id.tv_raiting)
             btnDecr.performClick()
-            TestCase.assertEquals("Raiting: -1", tv.text)
+            TestCase.assertEquals(TEST_RAITING_MINUS_1, tv.text)
         }
     }
 
@@ -157,10 +157,10 @@ class BookActivityTest {
     fun activityCreateIntent_NotNull() {
         val intent = BookActivity.getIntent(
             context = context,
-            title = "Title",
-            author = "Author",
-            cover = "https://covers.openlibrary.org/b/ID/123-M.jpg",
-            raiting = 0
+            title = TEST_TITLE,
+            author = TEST_AUTHOR,
+            cover = TEST_COVER,
+            raiting = TEST_RAITING
         )
         TestCase.assertNotNull(intent)
     }
@@ -168,26 +168,22 @@ class BookActivityTest {
     @Test
     fun activityCreateIntent_HasExtras() {
         val intent = BookActivity.getIntent( context = context,
-            title = "Title",
-            author = "Author",
-            cover = "https://covers.openlibrary.org/b/ID/123-M.jpg",
-            raiting = 0)
+            title = TEST_TITLE,
+            author = TEST_AUTHOR,
+            cover = TEST_COVER,
+            raiting = TEST_RAITING)
         val bundle = intent.extras
         TestCase.assertNotNull(bundle)
     }
 
     @Test
     fun activityCreateIntent_HasExtrasValues() {
-        val title = "Title"
-        val author = "Author"
-        val cover = "https://covers.openlibrary.org/b/ID/123-M.jpg"
-        val raiting = 100
-        val intent = BookActivity.getIntent(context, title,author,cover,raiting)
+        val intent = BookActivity.getIntent(context, TEST_TITLE,TEST_AUTHOR,TEST_COVER,TEST_RAITING)
         val bundle = intent.extras
-        TestCase.assertEquals(title, bundle?.getString(BookActivity.BOOK_TITLE_EXTRA, ""))
-        TestCase.assertEquals(author, bundle?.getString(BookActivity.BOOK_AUTHOR_EXTRA, ""))
-        TestCase.assertEquals(cover, bundle?.getString(BookActivity.BOOK_COVER_EXTRA, ""))
-        TestCase.assertEquals(raiting, bundle?.getInt(BookActivity.BOOK_RAITING_EXTRA, 0))
+        TestCase.assertEquals(TEST_TITLE, bundle?.getString(BookActivity.BOOK_TITLE_EXTRA, ""))
+        TestCase.assertEquals(TEST_AUTHOR, bundle?.getString(BookActivity.BOOK_AUTHOR_EXTRA, ""))
+        TestCase.assertEquals(TEST_COVER, bundle?.getString(BookActivity.BOOK_COVER_EXTRA, ""))
+        TestCase.assertEquals(TEST_RAITING, bundle?.getInt(BookActivity.BOOK_RAITING_EXTRA, 0))
     }
 
     @After

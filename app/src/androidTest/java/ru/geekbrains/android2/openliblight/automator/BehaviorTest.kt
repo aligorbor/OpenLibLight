@@ -17,7 +17,10 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import ru.geekbrains.android2.openliblight.R
+import ru.geekbrains.android2.openliblight.*
+import ru.geekbrains.android2.openliblight.TEST_SEARCH_TEXT_FOR_RESULT
+import ru.geekbrains.android2.openliblight.TEST_SEARCH_TEXT_FOR_ZERO
+import ru.geekbrains.android2.openliblight.TEST_SEARCH_TEXT_RESULT
 
 @RunWith(AndroidJUnit4::class)
 @SdkSuppress(minSdkVersion = 18)
@@ -33,7 +36,7 @@ class BehaviorTest {
         val intent = context.packageManager.getLaunchIntentForPackage(packageName)
         intent!!.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         context.startActivity(intent)
-        uiDevice.wait(Until.hasObject(By.pkg(packageName).depth(0)), TIMEOUT)
+        uiDevice.wait(Until.hasObject(By.pkg(packageName).depth(0)), TEST_TIMEOUT)
 
     }
 
@@ -46,55 +49,55 @@ class BehaviorTest {
     @Test
     fun test_SearchIsPositive() {
         val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
-        editText.text = "dog"
+        editText.text = TEST_SEARCH_TEXT_FOR_RESULT
         Espresso.onView(ViewMatchers.withId(R.id.searchEditText))
             .perform(ViewActions.pressImeActionButton())
         val changedText =
             uiDevice.wait(
                 Until.findObject(By.res(packageName, "resultsCountTextView")),
-                TIMEOUT
+                TEST_TIMEOUT
             )
-        Assert.assertEquals(changedText.text.toString(), "Number of results: 49")
+        Assert.assertEquals(changedText.text.toString(), TEST_SEARCH_TEXT_RESULT)
     }
 
     @Test
     fun test_FabSearchIsPositive() {
         val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
-        editText.text = "dog"
+        editText.text = TEST_SEARCH_TEXT_FOR_RESULT
         val btnFab = uiDevice.findObject(By.res(packageName, "search_fab"))
         btnFab.click()
         val changedText =
             uiDevice.wait(
                 Until.findObject(By.res(packageName, "resultsCountTextView")),
-                TIMEOUT
+                TEST_TIMEOUT
             )
-        Assert.assertEquals(changedText.text.toString(), "Number of results: 49")
+        Assert.assertEquals(changedText.text.toString(), TEST_SEARCH_TEXT_RESULT)
     }
 
     @Test
     fun test_FabSearchIsNegative() {
         val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
-        editText.text = "qqqqqqq"
+        editText.text = TEST_SEARCH_TEXT_FOR_ZERO
         val btnFab = uiDevice.findObject(By.res(packageName, "search_fab"))
         btnFab.click()
         val changedText =
             uiDevice.wait(
                 Until.findObject(By.res(packageName, "resultsCountTextView")),
-                TIMEOUT
+                TEST_TIMEOUT
             )
-        Assert.assertEquals(changedText.text.toString(), "Number of results: 0")
+        Assert.assertEquals(changedText.text.toString(), TEST_SEARCH_TEXT_ZERO)
     }
 
     @Test
     fun test_OpenDetailsScreen() {
         val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
-        editText.text = "cat"
+        editText.text = TEST_SEARCH_TEXT
         Espresso.onView(ViewMatchers.withId(R.id.searchEditText))
             .perform(ViewActions.pressImeActionButton())
 
         uiDevice.wait(
             Until.findObject(By.res(packageName, "resultsCountTextView")),
-            TIMEOUT
+            TEST_TIMEOUT
         )
 
         val toDetails: UiObject2 = uiDevice.findObject(
@@ -109,21 +112,21 @@ class BehaviorTest {
         val checkText =
             uiDevice.wait(
                 Until.findObject(By.res(packageName, "btn_decr")),
-                TIMEOUT
+                TEST_TIMEOUT
             )
-        Assert.assertEquals(checkText.text, "-")
+        Assert.assertEquals(checkText.text, TEST_BUTTON_DECR_TEXT)
     }
 
     @Test
     fun test_OpenDetailsScreen_ShowSearchResult() {
         val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
-        editText.text = "dog"
+        editText.text = TEST_SEARCH_TEXT_FOR_RESULT
         Espresso.onView(ViewMatchers.withId(R.id.searchEditText))
             .perform(ViewActions.pressImeActionButton())
 
         uiDevice.wait(
             Until.findObject(By.res(packageName, "resultsCountTextView")),
-            TIMEOUT
+            TEST_TIMEOUT
         )
 
         val toDetails: UiObject2 = uiDevice.findObject(
@@ -138,21 +141,21 @@ class BehaviorTest {
         val changedText =
             uiDevice.wait(
                 Until.findObject(By.res(packageName, "tv_raiting")),
-                TIMEOUT
+                TEST_TIMEOUT
             )
-        Assert.assertEquals(changedText.text, "Raiting: 49")
+        Assert.assertEquals(changedText.text, TEST_SEARCH_TEXT_RESULT_RAITING)
     }
 
     @Test
     fun test_OpenDetailsScreen_ClickButtonIncr() {
         val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
-        editText.text = "dog"
+        editText.text = TEST_SEARCH_TEXT_FOR_RESULT
         Espresso.onView(ViewMatchers.withId(R.id.searchEditText))
             .perform(ViewActions.pressImeActionButton())
 
         uiDevice.wait(
             Until.findObject(By.res(packageName, "resultsCountTextView")),
-            TIMEOUT
+            TEST_TIMEOUT
         )
 
         val toDetails: UiObject2 = uiDevice.findObject(
@@ -166,24 +169,24 @@ class BehaviorTest {
         val changedText =
             uiDevice.wait(
                 Until.findObject(By.res(packageName, "tv_raiting")),
-                TIMEOUT
+                TEST_TIMEOUT
             )
         val btnIncr = uiDevice.findObject(By.res(packageName, "btn_incr"))
         btnIncr.click()
 
-        Assert.assertEquals(changedText.text, "Raiting: 50")
+        Assert.assertEquals(changedText.text, TEST_SEARCH_TEXT_RESULT_RAITING_INCR)
     }
 
     @Test
     fun test_OpenDetailsScreen_ClickButtonDecr() {
         val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
-        editText.text = "dog"
+        editText.text = TEST_SEARCH_TEXT_FOR_RESULT
         Espresso.onView(ViewMatchers.withId(R.id.searchEditText))
             .perform(ViewActions.pressImeActionButton())
 
         uiDevice.wait(
             Until.findObject(By.res(packageName, "resultsCountTextView")),
-            TIMEOUT
+            TEST_TIMEOUT
         )
 
         val toDetails: UiObject2 = uiDevice.findObject(
@@ -197,15 +200,12 @@ class BehaviorTest {
         val changedText =
             uiDevice.wait(
                 Until.findObject(By.res(packageName, "tv_raiting")),
-                TIMEOUT
+                TEST_TIMEOUT
             )
         val btnIncr = uiDevice.findObject(By.res(packageName, "btn_decr"))
         btnIncr.click()
 
-        Assert.assertEquals(changedText.text, "Raiting: 48")
+        Assert.assertEquals(changedText.text, TEST_SEARCH_TEXT_RESULT_RAITING_DECR)
     }
 
-    companion object {
-        private const val TIMEOUT = 5000L
-    }
 }

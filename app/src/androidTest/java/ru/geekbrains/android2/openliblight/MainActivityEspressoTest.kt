@@ -59,10 +59,10 @@ class MainActivityEspressoTest {
 
     @Test
     fun activityEditText_HasText() {
-        val assertion = matches(withText("cat"))
+        val assertion = matches(withText(TEST_SEARCH_TEXT))
         onView(withId(R.id.searchEditText)).perform(click())
         onView(withId(R.id.searchEditText)).perform(
-            replaceText("cat"),
+            replaceText(TEST_SEARCH_TEXT),
             closeSoftKeyboard()
         )
         onView(withId(R.id.searchEditText)).check(assertion)
@@ -96,14 +96,14 @@ class MainActivityEspressoTest {
     fun activitySearch_IsWorking() {
         onView(withId(R.id.searchEditText)).perform(click())
         onView(withId(R.id.searchEditText)).perform(
-            replaceText("dog"),
+            replaceText(TEST_SEARCH_TEXT_FOR_RESULT),
             closeSoftKeyboard()
         )
         onView(withId(R.id.searchEditText)).perform(pressImeActionButton())
         onView(isRoot()).perform(delay())
         onView(withId(R.id.resultsCountTextView)).check(
             matches(
-                withText("Number of results: 49")
+                withText(TEST_SEARCH_TEXT_RESULT)
             )
         )
     }
@@ -111,9 +111,9 @@ class MainActivityEspressoTest {
     private fun delay(): ViewAction? {
         return object : ViewAction {
             override fun getConstraints(): Matcher<View> = isRoot()
-            override fun getDescription(): String = "wait for $3 seconds"
+            override fun getDescription(): String = TEST_DELAY_DESCR
             override fun perform(uiController: UiController, view: View?) {
-                uiController.loopMainThreadForAtLeast(3000)
+                uiController.loopMainThreadForAtLeast(TEST_DELAY)
             }
         }
     }

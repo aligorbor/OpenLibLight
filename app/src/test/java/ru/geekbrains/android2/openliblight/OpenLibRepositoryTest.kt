@@ -29,17 +29,14 @@ class OpenLibRepositoryTest {
 
     @Test
     fun searchOpenLib_Test() {
-        val searchQuery = "some theme"
         val call = mock(Call::class.java) as Call<WorksSubj?>
-
-        `when`(openLibApi.getWorksBySubject(searchQuery)).thenReturn(call)
-        repository.searchOpenLib(searchQuery, mock(RepositoryCallback::class.java))
-        verify(openLibApi, times(1)).getWorksBySubject(searchQuery)
+        `when`(openLibApi.getWorksBySubject(TEST_SEARCH_QUERY)).thenReturn(call)
+        repository.searchOpenLib(TEST_SEARCH_QUERY, mock(RepositoryCallback::class.java))
+        verify(openLibApi, times(1)).getWorksBySubject(TEST_SEARCH_QUERY)
     }
 
     @Test
     fun searchOpenLib_TestCallback() {
-        val searchQuery = "some theme"
         val response = mock(Response::class.java) as Response<WorksSubj?>
         val openLibRepositoryCallBack = mock(RepositoryCallback::class.java)
         val call = object : Call<WorksSubj?> {
@@ -78,9 +75,9 @@ class OpenLibRepositoryTest {
 
         }
 
-        `when`(openLibApi.getWorksBySubject(searchQuery)).thenReturn(call)
+        `when`(openLibApi.getWorksBySubject(TEST_SEARCH_QUERY)).thenReturn(call)
 
-        repository.searchOpenLib(searchQuery, openLibRepositoryCallBack)
+        repository.searchOpenLib(TEST_SEARCH_QUERY, openLibRepositoryCallBack)
 
         verify(openLibRepositoryCallBack, times(1)).handleOpenLibResponse(response)
         verify(openLibRepositoryCallBack, times(1)).handleOpenLibError()
@@ -88,13 +85,12 @@ class OpenLibRepositoryTest {
 
     @Test
     fun searchOpenLib_TestCallback_WithMock() {
-        val searchQuery = "some theme"
         val response = mock(Response::class.java) as Response<WorksSubj?>
         val call = mock(Call::class.java) as Call<WorksSubj?>
         val callBack = mock(Callback::class.java) as Callback<WorksSubj?>
         val openLibRepositoryCallback = mock(RepositoryCallback::class.java)
 
-        `when`(openLibApi.getWorksBySubject(searchQuery)).thenReturn(call)
+        `when`(openLibApi.getWorksBySubject(TEST_SEARCH_QUERY)).thenReturn(call)
         `when`(call.enqueue(callBack)).then {
             callBack.onResponse(any(), any())
         }
@@ -103,7 +99,7 @@ class OpenLibRepositoryTest {
             //    openLibRepositoryCallback.handleOpenLibError()
         }
 
-        repository.searchOpenLib(searchQuery, openLibRepositoryCallback)
+        repository.searchOpenLib(TEST_SEARCH_QUERY, openLibRepositoryCallback)
 
         verify(openLibRepositoryCallback, times(1)).handleOpenLibResponse(response)
 

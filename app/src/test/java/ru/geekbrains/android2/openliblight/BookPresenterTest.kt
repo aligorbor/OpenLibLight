@@ -66,9 +66,8 @@ class BookPresenterTest {
 
     @Test
     fun setRaiting_AssertEqual() {
-        val raiting = 100
-        presenter.setRaiting(raiting)
-        TestCase.assertEquals(raiting, presenter.getRaiting())
+        presenter.setRaiting(TEST_RAITING)
+        TestCase.assertEquals(TEST_RAITING, presenter.getRaiting())
     }
 
     @Test
@@ -85,7 +84,7 @@ class BookPresenterTest {
             presenter.onAttach(it)
             presenter.onIncrement()
             val tv = it.findViewById<TextView>(R.id.tv_raiting)
-            TestCase.assertEquals("Raiting: 1", tv.text)
+            TestCase.assertEquals(TEST_RAITING_PLUS_1, tv.text)
         }
     }
 
@@ -103,7 +102,7 @@ class BookPresenterTest {
             presenter.onAttach(it)
             presenter.onDecrement()
             val tv = it.findViewById<TextView>(R.id.tv_raiting)
-            TestCase.assertEquals("Raiting: -1", tv.text)
+            TestCase.assertEquals(TEST_RAITING_MINUS_1, tv.text)
         }
     }
 
