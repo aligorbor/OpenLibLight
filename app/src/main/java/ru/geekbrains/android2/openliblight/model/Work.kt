@@ -6,7 +6,7 @@ data class Work(
 @SerializedName("key")
 val key: String,
 @SerializedName("title")
-val title: String,
+var title: String,
 @SerializedName("cover_id")
 val coverId: Int,
 @SerializedName("authors")

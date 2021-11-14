@@ -1,4 +1,4 @@
-package ru.geekbrains.android2.openliblight
+package ru.geekbrains.android2.openliblight.espresso
 
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,6 +15,14 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import ru.geekbrains.android2.openliblight.*
+import ru.geekbrains.android2.openliblight.TEST_AUTHOR_BLANK
+import ru.geekbrains.android2.openliblight.TEST_BUTTON_DECR_TEXT
+import ru.geekbrains.android2.openliblight.TEST_BUTTON_INCR_TEXT
+import ru.geekbrains.android2.openliblight.TEST_RAITING_MINUS_1
+import ru.geekbrains.android2.openliblight.TEST_RAITING_PLUS_1
+import ru.geekbrains.android2.openliblight.TEST_RAITING_ZERO
+import ru.geekbrains.android2.openliblight.TEST_TITLE_BLANK
 import ru.geekbrains.android2.openliblight.view.book.BookActivity
 
 @RunWith(AndroidJUnit4::class)

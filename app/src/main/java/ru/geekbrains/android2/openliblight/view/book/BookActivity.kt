@@ -4,55 +4,26 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_details.*
 import ru.geekbrains.android2.openliblight.R
-import ru.geekbrains.android2.openliblight.presenter.book.BookPresenter
-import ru.geekbrains.android2.openliblight.presenter.book.PresenterBookContract
-import ru.geekbrains.android2.openliblight.utils.setImageFromUri
-import java.util.*
 
-class BookActivity : AppCompatActivity(), ViewBookContract {
-
-    private val presenter: PresenterBookContract<ViewBookContract> = BookPresenter()
+class BookActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
-        setUI()
+        supportFragmentManager.beginTransaction()
+            .add(
+                R.id.detailsFragmentContainer,
+                BookFragment.newInstance(
+                    intent.getStringExtra(BOOK_TITLE_EXTRA) ?: "",
+                    intent.getStringExtra(BOOK_AUTHOR_EXTRA) ?: "",
+                    intent.getStringExtra(BOOK_COVER_EXTRA) ?: "",
+                    intent.getIntExtra(BOOK_RAITING_EXTRA, 0)
+                )
+            )
+            .commitAllowingStateLoss()
     }
 
-    override fun onStart() {
-        super.onStart()
-        presenter.onAttach(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        presenter.onDetach()
-    }
-
-    private fun setUI() {
-        val title = intent.getStringExtra(BOOK_TITLE_EXTRA)
-        val author = intent.getStringExtra(BOOK_AUTHOR_EXTRA)
-        val cover = intent.getStringExtra(BOOK_COVER_EXTRA)
-        val raiting = intent.getIntExtra(BOOK_RAITING_EXTRA, 0)
-        iv_cover.setImageFromUri(cover ?: "")
-        tv_title.text = String.format(Locale.getDefault(), getString(R.string.title), title ?: "")
-        tv_authors.text = String.format(Locale.getDefault(), getString(R.string.authors), author ?: "")
-        presenter.setRaiting(raiting)
-        setRaitingText(presenter.getRaiting())
-        btn_decr.setOnClickListener { presenter.onDecrement() }
-        btn_incr.setOnClickListener { presenter.onIncrement() }
-    }
-
-    override fun setRaiting(raiting: Int) {
-        setRaitingText(raiting)
-    }
-
-    private fun setRaitingText(raiting: Int) {
-        tv_raiting.text =
-            String.format(Locale.getDefault(), getString(R.string.raiting_count), raiting)
-    }
 
     companion object {
         const val BOOK_TITLE_EXTRA = "BOOK_TITLE_EXTRA"

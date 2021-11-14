@@ -1,4 +1,4 @@
-package ru.geekbrains.android2.openliblight
+package ru.geekbrains.android2.openliblight.espresso
 
 import android.view.View
 import android.widget.EditText
@@ -18,6 +18,12 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import ru.geekbrains.android2.openliblight.*
+import ru.geekbrains.android2.openliblight.TEST_DELAY
+import ru.geekbrains.android2.openliblight.TEST_DELAY_DESCR
+import ru.geekbrains.android2.openliblight.TEST_SEARCH_TEXT
+import ru.geekbrains.android2.openliblight.TEST_SEARCH_TEXT_FOR_RESULT
+import ru.geekbrains.android2.openliblight.TEST_SEARCH_TEXT_RESULT
 import ru.geekbrains.android2.openliblight.view.books.MainActivity
 
 @RunWith(AndroidJUnit4::class)
