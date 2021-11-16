@@ -1,6 +1,7 @@
 package ru.geekbrains.android2.openliblight
 
 import androidx.core.os.bundleOf
+import ru.geekbrains.android2.openliblight.model.WorksSubj
 import ru.geekbrains.android2.openliblight.view.book.BookFragment
 
 internal const val TEST_RAITING = 100
@@ -20,6 +21,8 @@ internal const val TEST_RAITING_HUNDRED = "Raiting: 100"
 internal const val TEST_SEARCH_QUERY = "some theme"
 internal const val TEST_DISPLAY_ERROR_UNSUCCESSFUL = "Response is null or unsuccessful"
 internal const val TEST_DISPLAY_ERROR_NULL = "Search results or total count are null"
+internal const val TEST_DISPLAY_ERROR = "error"
+
 
 internal const val TEST_BUTTON_INCR_TEXT = "+"
 internal const val TEST_BUTTON_DECR_TEXT = "-"
@@ -51,3 +54,6 @@ internal const val TEST_RECYCLE_CLICK_AT = 3
 internal const val TEST_RECYCLE_CLICK_ON = "The dog"
 internal const val TAP_ON_ITEM_WITH_ID_DESCRIPTION = "Нажимаем на view с указанным id"
 
+internal const val TEST_WORKS_KEY = "Key"
+internal const val TEST_WORKS_NAME = "Name"
+internal const val TEST_WORKS_COUNT = "49"

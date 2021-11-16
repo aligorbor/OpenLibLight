@@ -1,5 +1,6 @@
 package ru.geekbrains.android2.openliblight.repository
 
+import io.reactivex.Observable
 import retrofit2.Response
 import ru.geekbrains.android2.openliblight.model.Author
 import ru.geekbrains.android2.openliblight.model.Work
@@ -12,6 +13,14 @@ internal class FakeOpenLibRepository : RepositoryContract {
         callback: RepositoryCallback
     ) {
         callback.handleOpenLibResponse(Response.success(getFakeResponse()))
+    }
+
+    override fun searchOpenLib(query: String): Observable<WorksSubj> {
+        return Observable.just(getFakeResponse())
+    }
+
+    override suspend fun searchOpenLibAsync(query: String): WorksSubj {
+        return getFakeResponse()
     }
 
     private fun getFakeResponse(): WorksSubj {

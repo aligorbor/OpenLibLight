@@ -6,6 +6,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.geekbrains.android2.openliblight.R
 import ru.geekbrains.android2.openliblight.model.Work
@@ -18,24 +19,47 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), ViewBooksContract, BooksAdapter.Delegate {
     private val adapter = BooksAdapter(this)
-    private val presenter: PresenterBooksContract<ViewBooksContract> =
-        BooksPresenter(createRepository())
+//    private val presenter: PresenterBooksContract<ViewBooksContract> =
+//        BooksPresenter(createRepository())
+private val viewModel: BooksViewModel by lazy {
+    ViewModelProvider(this).get(BooksViewModel::class.java)
+}
     private var totalCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setUI()
+        viewModel.subscribeToLiveData().observe(this) {
+            onStateChange(it)
+        }
+    }
+
+    private fun onStateChange(screenState: ScreenState) {
+        when (screenState) {
+            is ScreenState.Working -> {
+                displayLoading(false)
+                val searchResponse = screenState.searchResponse
+                displaySearchResults(searchResponse.works?: listOf(),searchResponse.workCount?:"0")
+            }
+            is ScreenState.Loading -> {
+                displayLoading(true)
+            }
+            is ScreenState.Error -> {
+                displayLoading(false)
+                displayError(screenState.error.message?:getString(R.string.undefined_error))
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        presenter.onAttach(this)
+    //    presenter.onAttach(this)
     }
 
     override fun onStop() {
         super.onStop()
-        presenter.onDetach()
+   //     presenter.onDetach()
     }
 
     private fun setUI() {
@@ -63,7 +87,8 @@ class MainActivity : AppCompatActivity(), ViewBooksContract, BooksAdapter.Delega
     private fun searchQuery(): Boolean {
         val query = searchEditText.text.toString()
         if (query.isNotBlank()) {
-            presenter.searchOpenLib(query)
+            //   presenter.searchOpenLib(query)
+            viewModel.searchOpenLib(query)
             return true
         } else {
             Toast.makeText(

@@ -8,7 +8,7 @@ data class WorksSubj(
     @SerializedName("name")
     val name: String,
     @SerializedName("work_count")
-    val workCount: String,
+    val workCount: String?,
     @SerializedName("works")
-    val works: List<Work>
+    val works: List<Work>?
 )
